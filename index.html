@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Amazon Stock Availability Checker</title>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            background-color: #4CAF50;
+            padding: 10px;
+            margin: 0;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid rgb(248, 6, 6);
+            text-align: left;
+            padding: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        td.expandable {
+            cursor: pointer;
+        }
+        td.expanded {
+            overflow: visible;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Amazon Stock Availability Checker</h1>
+    <form method="post">
+        <label for="url">Amazon Product URL:</label>
+        <input type="text" name="url" required><br><br>
+
+        <label for="email">Receiver Email:</label>
+        <input type="email" name="email" required><br><br>
+
+        <input type="submit" name="action" value="Fetch Details">
+    </form>
+
+    {% if product_data %}
+    <h2>Product Details</h2>
+    <table>
+        <tr>
+            {% for key, value in product_data.items() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for key, value in product_data.items() %}
+                <td class="expandable" onclick="toggleExpand(this)">{{ value }}</td>
+            {% endfor %}
+        </tr>
+    </table>
+    {% endif %}
+
+    {% if email_status %}
+    <h3>{{ email_status }}</h3>
+    {% endif %}
+
+    <br>
+    <a href="/view-csv">View History</a>
+
+    <script>
+        function toggleExpand(element) {
+            var cells = element.parentElement.querySelectorAll('td');
+            cells.forEach(function(cell) {
+                cell.classList.toggle('expanded');
+            });
+        }
+    </script>
+
+
+
+
+</body>
+</html>
